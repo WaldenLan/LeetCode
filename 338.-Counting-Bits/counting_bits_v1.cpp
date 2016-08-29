@@ -16,7 +16,7 @@ vector <int> countBits(int num) {
 			if (rmd == 1) occur++;
 		}
 		result.push_back(occur);
-	}
+    }
     return result;
 }
 
