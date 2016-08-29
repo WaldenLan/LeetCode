@@ -3,29 +3,22 @@
 
 using namespace std;
 
-vector <int> countBits(int num)
-{
-	vector <int> result;
+vector <int> countBits(int num) {
+    vector <int> result;
 
-	for (int j = 0; j <= num; j++)
+	for (int i = 0; i <= num; i++)
 	{
-		int tmp = j;
+		int tmp = i;
 		int occur = 0;
-		vector <int> base2;
 		while (tmp != 0)
 		{
 			int rmd = tmp % 2;
 			tmp = (tmp - rmd) / 2;
-			base2.push_back(rmd);
-		}
-		for (unsigned int i = 0; i < base2.size(); i++)
-		{
-			if (base2[i] == 1) occur++;
+			if (rmd == 1) occur++;
 		}
 		result.push_back(occur);
 	}
-
-	return result;
+    return result;
 }
 
 int main(int argc, char const *argv[])
