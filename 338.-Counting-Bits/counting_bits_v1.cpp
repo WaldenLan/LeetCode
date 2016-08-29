@@ -4,7 +4,8 @@
 using namespace std;
 
 vector <int> countBits(int num) {
-    vector <int> result;
+	vector <int> result;
+
 	for (int i = 0; i <= num; i++)
 	{
 		int tmp = i;
@@ -16,8 +17,8 @@ vector <int> countBits(int num) {
 			if (rmd == 1) occur++;
 		}
 		result.push_back(occur);
-    }
-    return result;
+	}
+	return result;
 }
 
 int main(int argc, char const *argv[])
