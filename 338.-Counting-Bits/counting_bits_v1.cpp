@@ -5,7 +5,6 @@ using namespace std;
 
 vector <int> countBits(int num) {
     vector <int> result;
-
 	for (int i = 0; i <= num; i++)
 	{
 		int tmp = i;
