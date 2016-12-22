@@ -2,33 +2,32 @@
 #define LRU_H
 
 #include <iostream>
+#include <string>
+#include <unordered_map>
+#include <list>
 #include <map>
 
 using namespace std;
 
 class LRUCache{
-    struct entry
-    {
-        unsigned value;
-        int times;
-    };
     int capacity;
     int current;
-    int times;
-    unordered_map<int, struct entry> cache;
+    unordered_map<int, list<pair<int, int> >::iterator> cache;
+    list<pair<int, int> > link;
+    /*first:    key*/
+    /*second:   value*/
 
 public:
     LRUCache(int c) {
         capacity = c;
-        times = 0;
         current = 0;
     }
     
     int get(int key) {
         if (cache.count(key) > 0)
         {
-            cache[key].times = times++;
-            return cache[key].value;
+            link.splice(link.begin(), link, cache[key]);
+            return cache[key]->second;
         }
         else
         {
@@ -39,42 +38,35 @@ public:
     void set(int key, int value) {
         if (cache.count(key) > 0)
         {
-            cache[key].value = value;
-            cache[key].times = times++;
+            cache[key]->second = value;
+            link.splice(link.begin(), link, cache[key]);
             return;
         }
         else
         {
             if (current < capacity)
             {
-                cache[key].value = value;
-                cache[key].times = times++;
+                pair<int, int> tmp;
+                tmp.first = key;
+                tmp.second = value;
+                link.push_front(tmp);
+                cache[key] = link.begin();
                 current++;
             }
             else
             {
-                unordered_map<int, struct entry>::iterator it;
-                it = get_least();
-                cache.erase(it);
-                cache[key].value = value;
-                cache[key].times = times++;
+                pair<int, int> it = link.back();
+                unordered_map<int, list<pair<int, int> >::iterator>::iterator itt;
+                itt = cache.find(it.first);
+                cache.erase(itt);
+                link.pop_back();
+                pair<int, int> tmp;
+                tmp.first = key;
+                tmp.second = value;
+                link.push_front(tmp);
+                cache[key] = link.begin();
             }
         }
-    }
-
-    unordered_map<int, struct entry>::iterator get_least()
-    {
-        unordered_map<int, struct entry>::iterator it, it2, tmp;
-        it = cache.begin();
-        tmp = ++cache.begin();
-        for (it2 = tmp; it2 != cache.end(); it2++)
-        {
-            if (it2->second.times < it->second.times)
-            {
-                it = it2;
-            }
-        }
-        return it;
     }
 };
 
