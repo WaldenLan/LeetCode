@@ -2,16 +2,14 @@
 #include <cstdio>
 #include <cmath>
 #include <vector>
+
 using namespace std;
+
 
 int main(int argc, char const *argv[])
 {
-	int *a = new int;
-	*a = 2;
-
-	vector <int*> data;
-	data.push_back(a); 
-
-	delete a;
+	int a = 5;
+	int result = sqrt(a);
+	cout << result << endl;
 	return 0;
 }
